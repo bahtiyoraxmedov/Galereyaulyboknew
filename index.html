@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <title>Галерея улыбок | Стоматология</title>
+    <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/2962/2962055.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        html { scroll-behavior: smooth; }
+        .gradient-hero { background: linear-gradient(135deg, #e8f4ff 0%, #d4e8ff 50%, #b8d4f8 100%); }
+        .gradient-bg { background: linear-gradient(135deg, #0a5a8c 0%, #1e6fa3 50%, #2b7ab3 100%); }
+        .card-service {
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+            opacity: 0;
+            transform: translateY(30px) scale(0.96);
+        }
+        .card-service.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        .card-service:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+            border-color: #2b7ab3;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #0a5a8c 0%, #1e6fa3 100%);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px rgba(10,90,140,0.3);
+        }
+        .btn-outline {
+            border: 2px solid #0a5a8c;
+            transition: all 0.3s ease;
+        }
+        .btn-outline:hover {
+            background: #0a5a8c;
+            color: white;
+            transform: scale(1.02);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(4px);
+        }
+        .modal.show { display: flex; }
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1001;
+            justify-content: center;
+            align-items: center;
+        }
+        .loading-overlay.show { display: flex; }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #fff;
+            border-top: 4px solid #2b7ab3;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #25D366;
+            color: white;
+            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 99;
+            transition: all 0.3s ease;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            background: #128C7E;
+        }
+        .phone-wrapper {
+            display: flex;
+            align-items: center;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            background: white;
+            transition: all 0.3s ease;
+        }
+        .phone-wrapper:focus-within {
+            border-color: #2b7ab3;
+            box-shadow: 0 0 0 3px rgba(43,122,179,0.2);
+        }
+        .phone-prefix {
+            background: #f8fafc;
+            padding: 12px 16px;
+            font-weight: 600;
+            color: #1e293b;
+            border-right: 1px solid #e2e8f0;
+            font-size: 15px;
+        }
+        .phone-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: none;
+            outline: none;
+            font-size: 15px;
+        }
+
+        /* Hamburger */
+        .hamburger {
+            cursor: pointer;
+            width: 30px;
+            height: 24px;
+            position: relative;
+            transform: rotate(0deg);
+            transition: .5s ease-in-out;
+            z-index: 100;
+        }
+        .hamburger span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: #4a5568;
+            border-radius: 9px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+        .hamburger span:nth-child(1) { top: 0px; }
+        .hamburger span:nth-child(2) { top: 10px; }
+        .hamburger span:nth-child(3) { top: 20px; }
+        .hamburger.active span:nth-child(1) {
+            top: 10px;
+            transform: rotate(135deg);
+            background: #0a5a8c;
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+            left: -60px;
+        }
+        .hamburger.active span:nth-child(3) {
+            top: 10px;
+            transform: rotate(-135deg);
+            background: #0a5a8c;
+        }
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 45;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+            overflow-y: auto;
+            padding-top: 80px;
+        }
+        .mobile-menu.open { transform: translateX(0); }
+        .mobile-menu .menu-items {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 20px;
+        }
+        .mobile-menu .menu-items a {
+            font-size: 18px;
+            font-weight: 500;
+            padding: 12px 16px;
+            color: #1e293b;
+            text-decoration: none;
+            border-bottom: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .mobile-menu .menu-items a:hover {
+            background: #f1f5f9;
+            color: #0a5a8c;
+            padding-left: 24px;
+        }
+        .mobile-menu .menu-items a i { width: 24px; color: #0a5a8c; }
+        .mobile-menu .menu-items .order-link {
+            background: #0a5a8c;
+            color: white;
+            border-radius: 40px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .mobile-menu .menu-items .order-link:hover {
+            background: #1e6fa3;
+            padding-left: 16px;
+        }
+        .mobile-menu .menu-items .order-link i { color: white; }
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 44;
+            display: none;
+        }
+        .menu-overlay.show { display: block; }
+        body.menu-open { overflow: hidden; }
+        .counter { font-size: 2.5rem; font-weight: 800; color: #0a5a8c; }
+        @media (max-width: 768px) {
+            .whatsapp-float { width: 48px; height: 48px; font-size: 24px; bottom: 15px; right: 15px; }
+            .counter { font-size: 1.8rem; }
+        }
+        .service-icon {
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 14px;
+            background: #e8f4ff;
+            color: #0a5a8c;
+            font-size: 24px;
+            transition: all 0.3s ease;
+        }
+        .card-service:hover .service-icon {
+            background: #0a5a8c;
+            color: white;
+            transform: rotate(-5deg) scale(1.05);
+        }
+        .social-3d {
+            display: inline-block;
+            transition: transform 0.3s ease;
+            transform: perspective(400px) rotateY(0deg);
+        }
+        .social-3d:hover {
+            transform: perspective(400px) rotateY(15deg) scale(1.1);
+        }
+        .time-slot:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        /* для картинок преимуществ */
+        .advantage-img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 16px;
+            border: 4px solid #bfdbfe;
+            transition: all 0.3s ease;
+        }
+        .advantage-img:hover {
+            transform: scale(1.05);
+            border-color: #0a5a8c;
+        }
+        .section-title {
+            color: #0a5a8c;
+            font-weight: 700;
+        }
+        .section-title span {
+            color: #1e293b;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/996557702270?text=Здравствуйте!%20Я%20хочу%20задать%20вопрос%20с%20сайта%20Галерея%20улыбок"
+       target="_blank" class="whatsapp-float">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Loading -->
+    <div id="loading" class="loading-overlay">
+        <div class="bg-white p-6 rounded-xl text-center shadow-xl">
+            <div class="spinner mx-auto mb-3"></div>
+            <p class="text-gray-700 font-medium">Отправка...</p>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="bg-white rounded-2xl max-w-md mx-4 p-6 text-center shadow-2xl">
+            <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-check-circle text-green-500 text-5xl"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-800 mb-2">Спасибо!</h3>
+            <p class="text-gray-600 mb-5">Ваша заявка принята.<br>Мы свяжемся с вами в ближайшее время.</p>
+            <button onclick="closeSuccessModal()" class="btn-primary text-white px-6 py-2 rounded-lg font-semibold">Закрыть</button>
+        </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div id="errorModal" class="modal">
+        <div class="bg-white rounded-2xl max-w-md mx-4 p-6 text-center shadow-2xl">
+            <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-times-circle text-red-500 text-5xl"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-800 mb-2">Произошла ошибка!</h3>
+            <p class="text-gray-600 mb-5">Произошла ошибка при отправке заявки.<br>Попробуйте снова или свяжитесь по телефону.</p>
+            <button onclick="closeErrorModal()" class="btn-primary text-white px-6 py-2 rounded-lg font-semibold">Закрыть</button>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 w-full bg-white/95 backdrop-blur-md shadow-md z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <div class="w-10 h-10 gradient-bg rounded-full flex items-center justify-center">
+                    <i class="fas fa-tooth text-white text-xl"></i>
+                </div>
+                <span class="text-xl font-bold text-gray-800">Галерея <span class="text-[#0a5a8c]">улыбок</span></span>
+            </div>
+            <div class="hidden md:flex gap-8">
+                <a href="#home" class="text-gray-700 hover:text-[#0a5a8c] transition font-medium">Главная</a>
+                <a href="#services" class="text-gray-700 hover:text-[#0a5a8c] transition font-medium">Услуги</a>
+                <a href="#prices" class="text-gray-700 hover:text-[#0a5a8c] transition font-medium">Цены</a>
+                <a href="#team" class="text-gray-700 hover:text-[#0a5a8c] transition font-medium">Врачи</a>
+                <a href="#order" class="bg-[#0a5a8c] text-white px-5 py-2 rounded-full hover:bg-[#1e6fa3] transition font-medium">Записаться</a>
+            </div>
+            <div class="hamburger md:hidden" id="hamburgerBtn">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="menu-items">
+            <a href="#home"><i class="fas fa-home"></i><span>Главная</span></a>
+            <a href="#services"><i class="fas fa-tooth"></i><span>Услуги</span></a>
+            <a href="#prices"><i class="fas fa-tag"></i><span>Цены</span></a>
+            <a href="#team"><i class="fas fa-users"></i><span>Врачи</span></a>
+            <a href="#order" class="order-link"><i class="fas fa-paper-plane"></i><span>Записаться</span></a>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <section id="home" class="gradient-hero pt-28 pb-20 px-4">
+        <div class="container mx-auto text-center">
+            <div class="animate-bounce mb-4">
+                <div class="w-20 h-20 bg-white/30 rounded-full flex items-center justify-center mx-auto">
+                    <i class="fas fa-tooth text-white text-3xl"></i>
+                </div>
+            </div>
+            <h1 class="text-4xl md:text-6xl font-bold text-gray-800 mb-4 leading-tight">Ваша улыбка<br class="hidden sm:block"><span class="text-[#0a5a8c]">наша забота</span></h1>
+            <p class="text-lg md:text-xl text-gray-700 mb-8 max-w-2xl mx-auto">Современные стоматологические услуги, высококачественное лечение и семейный подход</p>
+            <div class="flex justify-center gap-4 flex-wrap">
+                <a href="#order" class="btn-primary text-white px-8 py-3 rounded-full font-semibold shadow-lg">Записаться</a>
+                <a href="#services" class="btn-outline text-[#0a5a8c] px-8 py-3 rounded-full font-semibold">Услуги</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="py-12 px-4 bg-white">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                <div class="p-4"><div class="counter" id="counter1">0</div><p class="text-gray-600 font-medium">Счастливых пациентов</p></div>
+                <div class="p-4"><div class="counter" id="counter2">0</div><p class="text-gray-600 font-medium">Лет опыта</p></div>
+                <div class="p-4"><div class="counter" id="counter3">0</div><p class="text-gray-600 font-medium">Врачей</p></div>
+                <div class="p-4"><div class="counter" id="counter4">0</div><p class="text-gray-600 font-medium">Современного оборудования</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="py-20 px-4 bg-gray-50">
+        <div class="container mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold section-title mb-3">Наши <span>услуги</span></h2>
+                <div class="w-20 h-1 bg-[#0a5a8c] mx-auto rounded-full mb-4"></div>
+                <p class="text-gray-600 max-w-2xl mx-auto">Полный спектр стоматологических услуг с прозрачными ценами</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="servicesGrid"></div>
+        </div>
+    </section>
+
+    <!-- Prices (4 highlighted) -->
+    <section id="prices" class="py-20 px-4 bg-gradient-to-r from-blue-50 to-cyan-50">
+        <div class="container mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold section-title mb-3">Популярные <span>цены</span></h2>
+                <div class="w-20 h-1 bg-[#0a5a8c] mx-auto rounded-full mb-4"></div>
+                <p class="text-gray-600">Выберите услугу и запишитесь прямо сейчас</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto" id="pricesGrid"></div>
+            <div class="text-center mt-8">
+                <p class="text-gray-500 text-sm">* Полный прайс-лист смотрите в разделе «Услуги»</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Advantages with photos (квадратные с rounded) -->
+    <section class="py-20 px-4 bg-white">
+        <div class="container mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold section-title mb-3">Почему <span>выбирают нас?</span></h2>
+                <div class="w-20 h-1 bg-[#0a5a8c] mx-auto rounded-full mb-4"></div>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="text-center p-4 bg-white rounded-xl shadow-md hover:shadow-xl transition">
+                    <img src="https://picsum.photos/seed/equip1/200/200" alt="Современное оборудование" class="advantage-img mx-auto mb-3">
+                    <h4 class="font-bold text-lg text-gray-800">Современное оборудование</h4>
+                    <p class="text-gray-500 text-sm">Оборудование из Германии, Швейцарии</p>
+                </div>
+                <div class="text-center p-4 bg-white rounded-xl shadow-md hover:shadow-xl transition">
+                    <img src="https://picsum.photos/seed/doctor2/200/200" alt="Опытные врачи" class="advantage-img mx-auto mb-3">
+                    <h4 class="font-bold text-lg text-gray-800">Опытные врачи</h4>
+                    <p class="text-gray-500 text-sm">10+ лет опыта, постоянное повышение квалификации</p>
+                </div>
+                <div class="text-center p-4 bg-white rounded-xl shadow-md hover:shadow-xl transition">
+                    <img src="https://picsum.photos/seed/care3/200/200" alt="Индивидуальный подход" class="advantage-img mx-auto mb-3">
+                    <h4 class="font-bold text-lg text-gray-800">Индивидуальный подход</h4>
+                    <p class="text-gray-500 text-sm">Особое внимание к каждому пациенту</p>
+                </div>
+                <div class="text-center p-4 bg-white rounded-xl shadow-md hover:shadow-xl transition">
+                    <img src="https://picsum.photos/seed/time4/200/200" alt="Удобный график" class="advantage-img mx-auto mb-3">
+                    <h4 class="font-bold text-lg text-gray-800">Удобный график</h4>
+                    <p class="text-gray-500 text-sm">Работаем с 09:00 до 18:00, перерыв 12:00–13:00</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team -->
+    <section id="team" class="py-20 px-4 bg-gradient-to-r from-blue-50 to-cyan-50">
+        <div class="container mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold section-title mb-3">Наши <span>врачи</span></h2>
+                <div class="w-20 h-1 bg-[#0a5a8c] mx-auto rounded-full mb-4"></div>
+                <p class="text-gray-600">Опытные и квалифицированные специалисты</p>
+            </div>
+            <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto" id="teamGrid"></div>
+        </div>
+    </section>
+
+    <!-- Order Form -->
+    <section id="order" class="py-20 px-4 bg-gray-50">
+        <div class="container mx-auto max-w-2xl">
+            <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8">
+                <div class="text-center mb-6">
+                    <h2 class="text-3xl font-bold section-title mb-2">Форма <span>записи</span></h2>
+                    <div class="w-20 h-1 bg-[#0a5a8c] mx-auto rounded-full mb-4"></div>
+                    <p class="text-gray-600">Оставьте заявку, мы свяжемся с вами</p>
+                </div>
+                <form id="orderForm">
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="mb-4">
+                            <label class="block text-gray-700 font-medium mb-2">Имя *</label>
+                            <input type="text" id="name" required class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-[#0a5a8c] focus:ring-2 focus:ring-blue-200 transition">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700 font-medium mb-2">Фамилия *</label>
+                            <input type="text" id="surname" required class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-[#0a5a8c] focus:ring-2 focus:ring-blue-200 transition">
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 font-medium mb-2">Номер телефона *</label>
+                        <div class="phone-wrapper">
+                            <span class="phone-prefix">+996</span>
+                            <input type="tel" id="phone" placeholder="557 702 270" required
+                                   class="phone-input" maxlength="12"
+                                   oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 9)">
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1">Пример: 557 702 270</p>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 font-medium mb-2">Услуга</label>
+                        <select id="service" class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-[#0a5a8c] focus:ring-2 focus:ring-blue-200 transition">
+                            <option value="">Выберите услугу</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 font-medium mb-2">Врач</label>
+                        <select id="doctorSelect" class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-[#0a5a8c] focus:ring-2 focus:ring-blue-200 transition">
+                            <option value="">Выберите врача</option>
+                        </select>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="mb-4">
+                            <label class="block text-gray-700 font-medium mb-2">Дата *</label>
+                            <input type="date" id="appointmentDate" required class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-[#0a5a8c] focus:ring-2 focus:ring-blue-200 transition">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700 font-medium mb-2">Время *</label>
+                            <select id="appointmentTime" required class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-[#0a5a8c] focus:ring-2 focus:ring-blue-200 transition">
+                                <option value="">Выберите время</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 font-medium mb-2">Дополнительная информация</label>
+                        <textarea id="message" rows="3" class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-[#0a5a8c] focus:ring-2 focus:ring-blue-200 transition" placeholder="Ваши вопросы или пожелания..."></textarea>
+                    </div>
+                    <button type="submit" class="w-full btn-primary text-white py-3 rounded-lg font-semibold text-lg">
+                        <i class="fas fa-paper-plane mr-2"></i> Отправить заявку
+                    </button>
+                </form>
+                <div class="text-center mt-6 text-sm text-gray-500">
+                    <p>или позвоните нам: <a href="tel:+996557702270" class="text-[#0a5a8c] font-semibold hover:text-[#1e6fa3]">+996 557 702 270</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Info -->
+    <section class="py-12 px-4 gradient-bg">
+        <div class="container mx-auto">
+            <div class="grid md:grid-cols-3 gap-6 text-white text-center">
+                <div><i class="fas fa-map-marker-alt text-3xl mb-3"></i><h4 class="font-bold">Адрес</h4><p class="text-white/80 text-sm">Улица Аскара Шакирова, 271</p></div>
+                <div><i class="fas fa-phone text-3xl mb-3"></i><h4 class="font-bold">Телефон</h4><p class="text-white/80 text-sm">+996 557 702 270</p></div>
+                <div><i class="fas fa-clock text-3xl mb-3"></i><h4 class="font-bold">Режим работы</h4><p class="text-white/80 text-sm">Пн-Сб: 09:00 – 18:00<br>Перерыв: 12:00 – 13:00</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12 px-4">
+        <div class="container mx-auto text-center">
+            <div class="flex justify-center gap-6 mb-6">
+                <a href="https://www.instagram.com/galereya_ulybok.osh?igsh=MXB6ejl3cWR5anR3dg==" target="_blank" class="social-3d text-gray-400 hover:text-pink-400 text-3xl transition">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#" target="_blank" class="social-3d text-gray-400 hover:text-blue-400 text-3xl transition">
+                    <i class="fab fa-telegram"></i>
+                </a>
+                <a href="#" target="_blank" class="social-3d text-gray-400 hover:text-blue-600 text-3xl transition">
+                    <i class="fab fa-facebook"></i>
+                </a>
+            </div>
+            <p class="text-gray-400 text-sm">© 2026 Галерея улыбок. Все права защищены.</p>
+            <p class="text-gray-500 text-xs mt-2">Ваша улыбка – наша забота</p>
+            <p class="text-gray-500 text-xs mt-4">
+                Сайт создали:
+                <a href="https://www.instagram.com/mrxdevelopers?igsh=N2VqeThwcDY1Y2U1" target="_blank" class="text-blue-400 hover:text-blue-300 transition">
+                    <i class="fab fa-instagram mr-1"></i>@mrxdevelopers
+                </a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // ========== ДАННЫЕ ==========
+        const SERVICES = [
+            { id: 'consult', name: 'Консультация с составлением плана лечения', price: '500', icon: 'fa-user-md' },
+            { id: 'xray', name: 'Рентген 1 зуба', price: '200', icon: 'fa-x-ray' },
+            { id: 'hygiene_noair', name: 'Профессиональная гигиена (без Air Flow)', price: '3000', icon: 'fa-broom' },
+            { id: 'hygiene_air', name: 'Профессиональная гигиена (с Air Flow)', price: '4000', icon: 'fa-wind' },
+            { id: 'extraction', name: 'Удаление зуба', price: '1000–5000', icon: 'fa-tooth' },
+            { id: 'caries', name: 'Лечение кариеса зуба', price: '2000–3500', icon: 'fa-fill-drip' },
+            { id: 'restoration', name: 'Художественная реставрация зуба', price: '2500–4000', icon: 'fa-paint-brush' },
+            { id: 'root1', name: 'Лечение 1 корневого канала', price: '1000', icon: 'fa-arrow-right' },
+            { id: 'root2', name: 'Лечение 2 корневого канала', price: '1500', icon: 'fa-arrow-right' },
+            { id: 'root3', name: 'Лечение 3 корневого канала', price: '2000', icon: 'fa-arrow-right' },
+            { id: 'root_extra', name: 'Лечение дополнительного канала', price: '700', icon: 'fa-plus' },
+            { id: 'tool_extract', name: 'Извлечение обломка инструмента', price: '3000', icon: 'fa-tools' },
+            { id: 'post', name: 'Установка штифта', price: '500', icon: 'fa-bolt' },
+            { id: 'temp_crown', name: 'Временная коронка (1 шт.)', price: '1000', icon: 'fa-clock' },
+            { id: 'ceramic_crown', name: 'Керамическая коронка (e-max, 1 шт.)', price: '13000', icon: 'fa-gem' },
+            { id: 'metal_crown', name: 'Металлокерамическая коронка (1 шт.)', price: '5000', icon: 'fa-crown' },
+            { id: 'metal_implant_crown', name: 'Металлокерамическая коронка на имплантате', price: '9000', icon: 'fa-crown' },
+            { id: 'zircon_crown', name: 'Цирконовая коронка (1 шт.)', price: '11000', icon: 'fa-gem' },
+            { id: 'denture', name: 'Полный съёмный протез (1 челюсть)', price: '15000', icon: 'fa-dentistry' },
+            { id: 'zircon_implant_crown', name: 'Цирконовая коронка на имплантате (1 шт.)', price: '14000', icon: 'fa-gem' }
+        ];
+
+        const DOCTORS = [
+            { id: 'doc1', name: 'Адилет Керимов', spec: 'Главный стоматолог', education: 'ОшМУ, 2008', certs: 'Сертификаты по имплантологии и эстетической стоматологии', img: 'https://randomuser.me/api/portraits/men/32.jpg' },
+            { id: 'doc2', name: 'Айгерим Мамасалиева', spec: 'Стоматолог-терапевт', education: 'КГМА, 2012', certs: 'Сертификаты по терапии и эндодонтии', img: 'https://randomuser.me/api/portraits/women/68.jpg' },
+            { id: 'doc3', name: 'Эрнис Бакиров', spec: 'Ортодонт', education: 'ОшМУ, 2014', certs: 'Сертификаты по ортодонтии и брекет-системам', img: 'https://randomuser.me/api/portraits/men/45.jpg' },
+            { id: 'doc4', name: 'Мээрим Асанова', spec: 'Стоматолог-хирург', education: 'КГМА, 2010', certs: 'Сертификаты по хирургии и имплантологии', img: 'https://randomuser.me/api/portraits/women/44.jpg' },
+            { id: 'doc5', name: 'Бектур Исаков', spec: 'Стоматолог-ортопед', education: 'ОшМУ, 2011', certs: 'Сертификаты по протезированию', img: 'https://randomuser.me/api/portraits/men/52.jpg' },
+            { id: 'doc6', name: 'Нурия Сулайманова', spec: 'Детский стоматолог', education: 'КГМА, 2016', certs: 'Сертификаты по детской стоматологии', img: 'https://randomuser.me/api/portraits/women/57.jpg' }
+        ];
+
+        const PRICE_HIGHLIGHTS = [
+            { name: 'Консультация', price: '500', icon: 'fa-user-md' },
+            { name: 'Гигиена с Air Flow', price: '4000', icon: 'fa-wind' },
+            { name: 'Удаление зуба', price: '1000–5000', icon: 'fa-tooth' },
+            { name: 'Лечение кариеса', price: '2000–3500', icon: 'fa-fill-drip' }
+        ];
+
+        // ========== РЕНДЕРИНГ ==========
+        function renderServices() {
+            const grid = document.getElementById('servicesGrid');
+            grid.innerHTML = '';
+            SERVICES.forEach((svc, idx) => {
+                const card = document.createElement('div');
+                card.className = 'card-service bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300';
+                card.style.transitionDelay = (idx * 0.06) + 's';
+                card.innerHTML = `
+                    <div class="flex items-start gap-4">
+                        <div class="service-icon flex-shrink-0">
+                            <i class="fas ${svc.icon}"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-bold text-gray-800">${svc.name}</h3>
+                            <p class="text-2xl font-bold text-[#0a5a8c] mt-1">${svc.price} сом</p>
+                            <button onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})"
+                                    class="mt-3 btn-primary text-white px-4 py-2 rounded-lg font-semibold text-sm hover:shadow-lg transition">
+                                Записаться
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+            // Наблюдатель для анимации
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.15 });
+            document.querySelectorAll('.card-service').forEach(el => observer.observe(el));
+        }
+
+        function renderPrices() {
+            const grid = document.getElementById('pricesGrid');
+            grid.innerHTML = '';
+            PRICE_HIGHLIGHTS.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'bg-white rounded-xl p-6 shadow-md text-center hover:shadow-xl transition transform hover:-translate-y-1';
+                div.innerHTML = `
+                    <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-3">
+                        <i class="fas ${item.icon} text-2xl text-[#0a5a8c]"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">${item.name}</h3>
+                    <p class="text-3xl font-bold text-[#0a5a8c] mb-3">${item.price} сом</p>
+                    <button onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})"
+                            class="btn-primary text-white px-4 py-2 rounded-lg font-semibold text-sm">
+                        Записаться
+                    </button>
+                `;
+                grid.appendChild(div);
+            });
+        }
+
+        function renderTeam() {
+            const grid = document.getElementById('teamGrid');
+            grid.innerHTML = '';
+            DOCTORS.forEach(doc => {
+                const div = document.createElement('div');
+                div.className = 'text-center group bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition';
+                div.innerHTML = `
+                    <div class="w-32 h-32 mx-auto rounded-full overflow-hidden bg-gradient-to-r from-blue-400 to-blue-600 p-1 mb-3">
+                        <img src="${doc.img}" alt="${doc.name}" class="w-full h-full rounded-full object-cover">
+                    </div>
+                    <h4 class="font-bold text-lg">${doc.name}</h4>
+                    <p class="text-[#0a5a8c] text-sm font-medium">${doc.spec}</p>
+                    <p class="text-gray-500 text-xs mt-1">${doc.education}</p>
+                    <p class="text-gray-400 text-xs mt-1">${doc.certs}</p>
+                    <button onclick="selectDoctor('${doc.id}')"
+                            class="mt-3 btn-primary text-white px-4 py-1 rounded-full text-sm font-semibold">
+                        Записаться
+                    </button>
+                `;
+                grid.appendChild(div);
+            });
+        }
+
+        function renderFormSelects() {
+            const serviceSelect = document.getElementById('service');
+            SERVICES.forEach(svc => {
+                const opt = document.createElement('option');
+                opt.value = svc.id;
+                opt.textContent = svc.name + ' (' + svc.price + ' сом)';
+                serviceSelect.appendChild(opt);
+            });
+            const docSelect = document.getElementById('doctorSelect');
+            DOCTORS.forEach(doc => {
+                const opt = document.createElement('option');
+                opt.value = doc.id;
+                opt.textContent = doc.name + ' (' + doc.spec + ')';
+                docSelect.appendChild(opt);
+            });
+        }
+
+        // ========== БРОНИРОВАНИЕ ВРЕМЕНИ ==========
+        function getBookedSlots() {
+            try { return JSON.parse(localStorage.getItem('bookedSlots')) || {}; } catch { return {}; }
+        }
+        function saveBookedSlots(slots) {
+            localStorage.setItem('bookedSlots', JSON.stringify(slots));
+        }
+        function isSlotBooked(doctorId, date, time) {
+            const slots = getBookedSlots();
+            return !!slots[doctorId + '|' + date + '|' + time];
+        }
+        function bookSlot(doctorId, date, time) {
+            const slots = getBookedSlots();
+            const key = doctorId + '|' + date + '|' + time;
+            if (slots[key]) return false;
+            slots[key] = true;
+            saveBookedSlots(slots);
+            return true;
+        }
+        function getAvailableTimes(doctorId, date) {
+            const allTimes = [];
+            for (let h = 9; h <= 17; h++) {
+                if (h === 12) continue;
+                allTimes.push(String(h).padStart(2,'0') + ':00');
+            }
+            return allTimes.filter(time => !isSlotBooked(doctorId, date, time));
+        }
+        function updateTimeOptions() {
+            const doctorId = document.getElementById('doctorSelect').value;
+            const date = document.getElementById('appointmentDate').value;
+            const timeSelect = document.getElementById('appointmentTime');
+            timeSelect.innerHTML = '<option value="">Выберите время</option>';
+            if (!doctorId || !date) return;
+            const available = getAvailableTimes(doctorId, date);
+            if (available.length === 0) {
+                timeSelect.innerHTML = '<option value="">Нет свободных слотов</option>';
+                return;
+            }
+            available.forEach(t => {
+                const opt = document.createElement('option');
+                opt.value = t;
+                opt.textContent = t;
+                timeSelect.appendChild(opt);
+            });
+        }
+
+        // ========== ВЫБОР ВРАЧА ==========
+        function selectDoctor(doctorId) {
+            document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
+            const docSelect = document.getElementById('doctorSelect');
+            docSelect.value = doctorId;
+            updateTimeOptions();
+            docSelect.dispatchEvent(new Event('change'));
+        }
+
+        // ========== ИНИЦИАЛИЗАЦИЯ ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            renderServices();
+            renderPrices();
+            renderTeam();
+            renderFormSelects();
+
+            document.getElementById('doctorSelect').addEventListener('change', updateTimeOptions);
+            document.getElementById('appointmentDate').addEventListener('change', updateTimeOptions);
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('appointmentDate').setAttribute('min', today);
+
+            // Отправка формы
+            document.getElementById('orderForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const name = document.getElementById('name').value.trim();
+                const surname = document.getElementById('surname').value.trim();
+                let phone = document.getElementById('phone').value.replace(/[^0-9]/g, '');
+                const service = document.getElementById('service').value;
+                const doctorId = document.getElementById('doctorSelect').value;
+                const date = document.getElementById('appointmentDate').value;
+                const time = document.getElementById('appointmentTime').value;
+                const message = document.getElementById('message').value;
+
+                if (!name || !surname) { alert('Введите имя и фамилию'); return; }
+                if (phone.length !== 9) { alert('Введите корректный номер телефона (9 цифр)'); return; }
+                if (!doctorId) { alert('Выберите врача'); return; }
+                if (!date) { alert('Выберите дату'); return; }
+                if (!time) { alert('Выберите время'); return; }
+                if (isSlotBooked(doctorId, date, time)) {
+                    alert('Это время уже занято. Пожалуйста, выберите другое.');
+                    updateTimeOptions();
+                    return;
+                }
+                if (!bookSlot(doctorId, date, time)) {
+                    alert('Не удалось забронировать время, попробуйте ещё раз.');
+                    return;
+                }
+
+                const fullPhone = '+996' + phone;
+                const doctorName = DOCTORS.find(d => d.id === doctorId)?.name || '';
+                const serviceName = SERVICES.find(s => s.id === service)?.name || '';
+                const data = { name, surname, phone: fullPhone, service: serviceName, doctor: doctorName, date, time, message };
+
+                document.getElementById('loading').classList.add('show');
+                try {
+                    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzFNwW7JSlAlq4Lmk-PAtKdqLJapIKZTnQwcvMyKK00L03f9Vh6bIWKN9oXY_HSmPqqzw/exec';
+                    await fetch(APPS_SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+                    document.getElementById('loading').classList.remove('show');
+                    document.getElementById('successModal').classList.add('show');
+                    document.getElementById('orderForm').reset();
+                    updateTimeOptions();
+                } catch (error) {
+                    console.error(error);
+                    document.getElementById('loading').classList.remove('show');
+                    document.getElementById('errorModal').classList.add('show');
+                }
+            });
+
+            window.closeSuccessModal = () => document.getElementById('successModal').classList.remove('show');
+            window.closeErrorModal = () => document.getElementById('errorModal').classList.remove('show');
+
+            // Мобильное меню
+            const hamburger = document.getElementById('hamburgerBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const overlay = document.getElementById('menuOverlay');
+            const body = document.body;
+            function toggleMenu() {
+                hamburger.classList.toggle('active');
+                mobileMenu.classList.toggle('open');
+                overlay.classList.toggle('show');
+                body.classList.toggle('menu-open');
+            }
+            hamburger.addEventListener('click', toggleMenu);
+            overlay.addEventListener('click', toggleMenu);
+            document.querySelectorAll('#mobileMenu a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        toggleMenu();
+                        setTimeout(() => target.scrollIntoView({ behavior: 'smooth' }), 300);
+                    }
+                });
+            });
+
+            // Счетчики
+            function animateCounter(elId, start, end, duration) {
+                let startTime = null;
+                const el = document.getElementById(elId);
+                const step = (timestamp) => {
+                    if (!startTime) startTime = timestamp;
+                    const progress = Math.min((timestamp - startTime) / duration, 1);
+                    el.innerText = Math.floor(progress * (end - start) + start);
+                    if (progress < 1) requestAnimationFrame(step);
+                };
+                requestAnimationFrame(step);
+            }
+            const counterObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCounter('counter1', 0, 5680, 2000);
+                        animateCounter('counter2', 0, 15, 2000);
+                        animateCounter('counter3', 0, 12, 2000);
+                        animateCounter('counter4', 0, 25, 2000);
+                        counterObserver.disconnect();
+                    }
+                });
+            });
+            if (document.getElementById('counter1')) counterObserver.observe(document.getElementById('counter1'));
+
+            // Плавный скролл для десктопных ссылок
+            document.querySelectorAll('header .hidden a, .btn-primary, .btn-outline').forEach(anchor => {
+                if (anchor.getAttribute('href') && anchor.getAttribute('href').startsWith('#')) {
+                    anchor.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const target = document.querySelector(this.getAttribute('href'));
+                        if (target) target.scrollIntoView({ behavior: 'smooth' });
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
