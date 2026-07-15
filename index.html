@@ -28,211 +28,40 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.12);
             border-color: #2b7ab3;
         }
-        .btn-primary {
-            background: linear-gradient(135deg, #0a5a8c 0%, #1e6fa3 100%);
-            transition: all 0.3s ease;
-        }
-        .btn-primary:hover {
-            transform: scale(1.02);
-            box-shadow: 0 10px 20px rgba(10,90,140,0.3);
-        }
-        .btn-outline {
-            border: 2px solid #0a5a8c;
-            transition: all 0.3s ease;
-        }
-        .btn-outline:hover {
-            background: #0a5a8c;
-            color: white;
-            transform: scale(1.02);
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.6);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(4px);
-        }
+        .btn-primary { background: linear-gradient(135deg, #0a5a8c 0%, #1e6fa3 100%); transition: all 0.3s ease; }
+        .btn-primary:hover { transform: scale(1.02); box-shadow: 0 10px 20px rgba(10,90,140,0.3); }
+        .btn-outline { border: 2px solid #0a5a8c; transition: all 0.3s ease; }
+        .btn-outline:hover { background: #0a5a8c; color: white; transform: scale(1.02); }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center; backdrop-filter: blur(4px); }
         .modal.show { display: flex; }
-        .loading-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 1001;
-            justify-content: center;
-            align-items: center;
-        }
+        .loading-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1001; justify-content: center; align-items: center; }
         .loading-overlay.show { display: flex; }
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid #fff;
-            border-top: 4px solid #2b7ab3;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .whatsapp-float {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #25D366;
-            color: white;
-            border-radius: 50%;
-            width: 55px;
-            height: 55px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            z-index: 99;
-            transition: all 0.3s ease;
-        }
-        .whatsapp-float:hover {
-            transform: scale(1.1);
-            background: #128C7E;
-        }
-        .phone-wrapper {
-            display: flex;
-            align-items: center;
-            border: 1px solid #e2e8f0;
-            border-radius: 0.5rem;
-            overflow: hidden;
-            background: white;
-            transition: all 0.3s ease;
-        }
-        .phone-wrapper:focus-within {
-            border-color: #2b7ab3;
-            box-shadow: 0 0 0 3px rgba(43,122,179,0.2);
-        }
-        .phone-prefix {
-            background: #f8fafc;
-            padding: 12px 16px;
-            font-weight: 600;
-            color: #1e293b;
-            border-right: 1px solid #e2e8f0;
-            font-size: 15px;
-        }
-        .phone-input {
-            flex: 1;
-            padding: 12px 16px;
-            border: none;
-            outline: none;
-            font-size: 15px;
-        }
-
-        /* Hamburger */
-        .hamburger {
-            cursor: pointer;
-            width: 30px;
-            height: 24px;
-            position: relative;
-            transform: rotate(0deg);
-            transition: .5s ease-in-out;
-            z-index: 100;
-        }
-        .hamburger span {
-            display: block;
-            position: absolute;
-            height: 3px;
-            width: 100%;
-            background: #4a5568;
-            border-radius: 9px;
-            opacity: 1;
-            left: 0;
-            transform: rotate(0deg);
-            transition: .25s ease-in-out;
-        }
+        .spinner { width: 50px; height: 50px; border: 4px solid #fff; border-top: 4px solid #2b7ab3; border-radius: 50%; animation: spin 0.8s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .whatsapp-float { position: fixed; bottom: 20px; right: 20px; background: #25D366; color: white; border-radius: 50%; width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; font-size: 28px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 99; transition: all 0.3s ease; }
+        .whatsapp-float:hover { transform: scale(1.1); background: #128C7E; }
+        .phone-wrapper { display: flex; align-items: center; border: 1px solid #e2e8f0; border-radius: 0.5rem; overflow: hidden; background: white; transition: all 0.3s ease; }
+        .phone-wrapper:focus-within { border-color: #2b7ab3; box-shadow: 0 0 0 3px rgba(43,122,179,0.2); }
+        .phone-prefix { background: #f8fafc; padding: 12px 16px; font-weight: 600; color: #1e293b; border-right: 1px solid #e2e8f0; font-size: 15px; }
+        .phone-input { flex: 1; padding: 12px 16px; border: none; outline: none; font-size: 15px; }
+        .hamburger { cursor: pointer; width: 30px; height: 24px; position: relative; transform: rotate(0deg); transition: .5s ease-in-out; z-index: 100; }
+        .hamburger span { display: block; position: absolute; height: 3px; width: 100%; background: #4a5568; border-radius: 9px; opacity: 1; left: 0; transform: rotate(0deg); transition: .25s ease-in-out; }
         .hamburger span:nth-child(1) { top: 0px; }
         .hamburger span:nth-child(2) { top: 10px; }
         .hamburger span:nth-child(3) { top: 20px; }
-        .hamburger.active span:nth-child(1) {
-            top: 10px;
-            transform: rotate(135deg);
-            background: #0a5a8c;
-        }
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-            left: -60px;
-        }
-        .hamburger.active span:nth-child(3) {
-            top: 10px;
-            transform: rotate(-135deg);
-            background: #0a5a8c;
-        }
-        .mobile-menu {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: white;
-            z-index: 45;
-            transform: translateX(-100%);
-            transition: transform 0.3s ease-in-out;
-            overflow-y: auto;
-            padding-top: 80px;
-        }
+        .hamburger.active span:nth-child(1) { top: 10px; transform: rotate(135deg); background: #0a5a8c; }
+        .hamburger.active span:nth-child(2) { opacity: 0; left: -60px; }
+        .hamburger.active span:nth-child(3) { top: 10px; transform: rotate(-135deg); background: #0a5a8c; }
+        .mobile-menu { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 45; transform: translateX(-100%); transition: transform 0.3s ease-in-out; overflow-y: auto; padding-top: 80px; }
         .mobile-menu.open { transform: translateX(0); }
-        .mobile-menu .menu-items {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            padding: 20px;
-        }
-        .mobile-menu .menu-items a {
-            font-size: 18px;
-            font-weight: 500;
-            padding: 12px 16px;
-            color: #1e293b;
-            text-decoration: none;
-            border-bottom: 1px solid #e2e8f0;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .mobile-menu .menu-items a:hover {
-            background: #f1f5f9;
-            color: #0a5a8c;
-            padding-left: 24px;
-        }
+        .mobile-menu .menu-items { display: flex; flex-direction: column; gap: 20px; padding: 20px; }
+        .mobile-menu .menu-items a { font-size: 18px; font-weight: 500; padding: 12px 16px; color: #1e293b; text-decoration: none; border-bottom: 1px solid #e2e8f0; transition: all 0.3s ease; display: flex; align-items: center; gap: 12px; }
+        .mobile-menu .menu-items a:hover { background: #f1f5f9; color: #0a5a8c; padding-left: 24px; }
         .mobile-menu .menu-items a i { width: 24px; color: #0a5a8c; }
-        .mobile-menu .menu-items .order-link {
-            background: #0a5a8c;
-            color: white;
-            border-radius: 40px;
-            justify-content: center;
-            margin-top: 10px;
-        }
-        .mobile-menu .menu-items .order-link:hover {
-            background: #1e6fa3;
-            padding-left: 16px;
-        }
+        .mobile-menu .menu-items .order-link { background: #0a5a8c; color: white; border-radius: 40px; justify-content: center; margin-top: 10px; }
+        .mobile-menu .menu-items .order-link:hover { background: #1e6fa3; padding-left: 16px; }
         .mobile-menu .menu-items .order-link i { color: white; }
-        .menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 44;
-            display: none;
-        }
+        .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 44; display: none; }
         .menu-overlay.show { display: block; }
         body.menu-open { overflow: hidden; }
         .counter { font-size: 2.5rem; font-weight: 800; color: #0a5a8c; }
@@ -240,62 +69,20 @@
             .whatsapp-float { width: 48px; height: 48px; font-size: 24px; bottom: 15px; right: 15px; }
             .counter { font-size: 1.8rem; }
         }
-        .service-icon {
-            width: 56px;
-            height: 56px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 14px;
-            background: #e8f4ff;
-            color: #0a5a8c;
-            font-size: 24px;
-            transition: all 0.3s ease;
-        }
-        .card-service:hover .service-icon {
-            background: #0a5a8c;
-            color: white;
-            transform: rotate(-5deg) scale(1.05);
-        }
-        .social-3d {
-            display: inline-block;
-            transition: transform 0.3s ease;
-            transform: perspective(400px) rotateY(0deg);
-        }
-        .social-3d:hover {
-            transform: perspective(400px) rotateY(15deg) scale(1.1);
-        }
-        .time-slot:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        /* для картинок преимуществ */
-        .advantage-img {
-            width: 120px;
-            height: 120px;
-            object-fit: cover;
-            border-radius: 16px;
-            border: 4px solid #bfdbfe;
-            transition: all 0.3s ease;
-        }
-        .advantage-img:hover {
-            transform: scale(1.05);
-            border-color: #0a5a8c;
-        }
-        .section-title {
-            color: #0a5a8c;
-            font-weight: 700;
-        }
-        .section-title span {
-            color: #1e293b;
-        }
+        .service-icon { width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; border-radius: 14px; background: #e8f4ff; color: #0a5a8c; font-size: 24px; transition: all 0.3s ease; }
+        .card-service:hover .service-icon { background: #0a5a8c; color: white; transform: rotate(-5deg) scale(1.05); }
+        .social-3d { display: inline-block; transition: transform 0.3s ease; transform: perspective(400px) rotateY(0deg); }
+        .social-3d:hover { transform: perspective(400px) rotateY(15deg) scale(1.1); }
+        .advantage-img { width: 120px; height: 120px; object-fit: cover; border-radius: 16px; border: 4px solid #bfdbfe; transition: all 0.3s ease; }
+        .advantage-img:hover { transform: scale(1.05); border-color: #0a5a8c; }
+        .section-title { color: #0a5a8c; font-weight: 700; }
+        .section-title span { color: #1e293b; }
     </style>
 </head>
 <body>
 
     <!-- WhatsApp Float -->
-    <a href="https://wa.me/996557702270?text=Здравствуйте!%20Я%20хочу%20задать%20вопрос%20с%20сайта%20Галерея%20улыбок"
-       target="_blank" class="whatsapp-float">
+    <a href="https://wa.me/996557702270?text=Здравствуйте!%20Я%20хочу%20задать%20вопрос%20с%20сайта%20Галерея%20улыбок" target="_blank" class="whatsapp-float">
         <i class="fab fa-whatsapp"></i>
     </a>
 
@@ -406,7 +193,7 @@
         </div>
     </section>
 
-    <!-- Prices (4 highlighted) -->
+    <!-- Prices -->
     <section id="prices" class="py-20 px-4 bg-gradient-to-r from-blue-50 to-cyan-50">
         <div class="container mx-auto">
             <div class="text-center mb-12">
@@ -421,7 +208,7 @@
         </div>
     </section>
 
-    <!-- Advantages with photos (квадратные с rounded) -->
+    <!-- Advantages -->
     <section class="py-20 px-4 bg-white">
         <div class="container mx-auto">
             <div class="text-center mb-12">
@@ -489,9 +276,7 @@
                         <label class="block text-gray-700 font-medium mb-2">Номер телефона *</label>
                         <div class="phone-wrapper">
                             <span class="phone-prefix">+996</span>
-                            <input type="tel" id="phone" placeholder="557 702 270" required
-                                   class="phone-input" maxlength="12"
-                                   oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 9)">
+                            <input type="tel" id="phone" placeholder="557 702 270" required class="phone-input" maxlength="12" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 9)">
                         </div>
                         <p class="text-xs text-gray-500 mt-1">Пример: 557 702 270</p>
                     </div>
@@ -570,8 +355,11 @@
         </div>
     </footer>
 
+    <!-- ========== JAVASCRIPT ========== -->
     <script>
-        // ========== ДАННЫЕ ==========
+        console.log('Скрипт начал работу');
+
+        // --- ДАННЫЕ ---
         const SERVICES = [
             { id: 'consult', name: 'Консультация с составлением плана лечения', price: '500', icon: 'fa-user-md' },
             { id: 'xray', name: 'Рентген 1 зуба', price: '200', icon: 'fa-x-ray' },
@@ -611,9 +399,11 @@
             { name: 'Лечение кариеса', price: '2000–3500', icon: 'fa-fill-drip' }
         ];
 
-        // ========== РЕНДЕРИНГ ==========
+        // ====== ФУНКЦИИ РЕНДЕРИНГА ======
         function renderServices() {
             const grid = document.getElementById('servicesGrid');
+            if (!grid) { console.error('servicesGrid не найден'); return; }
+            console.log('Рендерим услуги');
             grid.innerHTML = '';
             SERVICES.forEach((svc, idx) => {
                 const card = document.createElement('div');
@@ -636,12 +426,10 @@
                 `;
                 grid.appendChild(card);
             });
-            // Наблюдатель для анимации
+            // Анимация при скролле
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
+                    if (entry.isIntersecting) entry.target.classList.add('visible');
                 });
             }, { threshold: 0.15 });
             document.querySelectorAll('.card-service').forEach(el => observer.observe(el));
@@ -649,6 +437,8 @@
 
         function renderPrices() {
             const grid = document.getElementById('pricesGrid');
+            if (!grid) { console.error('pricesGrid не найден'); return; }
+            console.log('Рендерим цены');
             grid.innerHTML = '';
             PRICE_HIGHLIGHTS.forEach(item => {
                 const div = document.createElement('div');
@@ -670,6 +460,8 @@
 
         function renderTeam() {
             const grid = document.getElementById('teamGrid');
+            if (!grid) { console.error('teamGrid не найден'); return; }
+            console.log('Рендерим врачей');
             grid.innerHTML = '';
             DOCTORS.forEach(doc => {
                 const div = document.createElement('div');
@@ -693,13 +485,16 @@
 
         function renderFormSelects() {
             const serviceSelect = document.getElementById('service');
+            if (!serviceSelect) { console.error('select услуги не найден'); return; }
             SERVICES.forEach(svc => {
                 const opt = document.createElement('option');
                 opt.value = svc.id;
                 opt.textContent = svc.name + ' (' + svc.price + ' сом)';
                 serviceSelect.appendChild(opt);
             });
+
             const docSelect = document.getElementById('doctorSelect');
+            if (!docSelect) { console.error('select врача не найден'); return; }
             DOCTORS.forEach(doc => {
                 const opt = document.createElement('option');
                 opt.value = doc.id;
@@ -708,7 +503,7 @@
             });
         }
 
-        // ========== БРОНИРОВАНИЕ ВРЕМЕНИ ==========
+        // ====== БРОНИРОВАНИЕ ВРЕМЕНИ ======
         function getBookedSlots() {
             try { return JSON.parse(localStorage.getItem('bookedSlots')) || {}; } catch { return {}; }
         }
@@ -716,8 +511,7 @@
             localStorage.setItem('bookedSlots', JSON.stringify(slots));
         }
         function isSlotBooked(doctorId, date, time) {
-            const slots = getBookedSlots();
-            return !!slots[doctorId + '|' + date + '|' + time];
+            return !!getBookedSlots()[doctorId + '|' + date + '|' + time];
         }
         function bookSlot(doctorId, date, time) {
             const slots = getBookedSlots();
@@ -731,14 +525,15 @@
             const allTimes = [];
             for (let h = 9; h <= 17; h++) {
                 if (h === 12) continue;
-                allTimes.push(String(h).padStart(2,'0') + ':00');
+                allTimes.push(String(h).padStart(2, '0') + ':00');
             }
             return allTimes.filter(time => !isSlotBooked(doctorId, date, time));
         }
         function updateTimeOptions() {
-            const doctorId = document.getElementById('doctorSelect').value;
-            const date = document.getElementById('appointmentDate').value;
+            const doctorId = document.getElementById('doctorSelect')?.value;
+            const date = document.getElementById('appointmentDate')?.value;
             const timeSelect = document.getElementById('appointmentTime');
+            if (!timeSelect) return;
             timeSelect.innerHTML = '<option value="">Выберите время</option>';
             if (!doctorId || !date) return;
             const available = getAvailableTimes(doctorId, date);
@@ -754,110 +549,157 @@
             });
         }
 
-        // ========== ВЫБОР ВРАЧА ==========
+        // ====== ВЫБОР ВРАЧА ======
         function selectDoctor(doctorId) {
             document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
             const docSelect = document.getElementById('doctorSelect');
-            docSelect.value = doctorId;
-            updateTimeOptions();
-            docSelect.dispatchEvent(new Event('change'));
+            if (docSelect) {
+                docSelect.value = doctorId;
+                updateTimeOptions();
+                docSelect.dispatchEvent(new Event('change'));
+            }
         }
 
-        // ========== ИНИЦИАЛИЗАЦИЯ ==========
+        // ====== МОДАЛКИ ======
+        window.closeSuccessModal = function() {
+            document.getElementById('successModal').classList.remove('show');
+            document.getElementById('orderForm')?.reset();
+        };
+        window.closeErrorModal = function() {
+            document.getElementById('errorModal').classList.remove('show');
+        };
+
+        // ====== ИНИЦИАЛИЗАЦИЯ ПОСЛЕ ЗАГРУЗКИ DOM ======
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM загружен, начинаем инициализацию...');
+
             renderServices();
             renderPrices();
             renderTeam();
             renderFormSelects();
 
-            document.getElementById('doctorSelect').addEventListener('change', updateTimeOptions);
-            document.getElementById('appointmentDate').addEventListener('change', updateTimeOptions);
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('appointmentDate').setAttribute('min', today);
+            // Слушатели для времени
+            const docSelect = document.getElementById('doctorSelect');
+            const dateInput = document.getElementById('appointmentDate');
+            if (docSelect) docSelect.addEventListener('change', updateTimeOptions);
+            if (dateInput) dateInput.addEventListener('change', updateTimeOptions);
 
-            // Отправка формы
-            document.getElementById('orderForm').addEventListener('submit', async function(e) {
-                e.preventDefault();
-                const name = document.getElementById('name').value.trim();
-                const surname = document.getElementById('surname').value.trim();
-                let phone = document.getElementById('phone').value.replace(/[^0-9]/g, '');
-                const service = document.getElementById('service').value;
-                const doctorId = document.getElementById('doctorSelect').value;
-                const date = document.getElementById('appointmentDate').value;
-                const time = document.getElementById('appointmentTime').value;
-                const message = document.getElementById('message').value;
+            // Минимальная дата – сегодня
+            if (dateInput) {
+                const today = new Date().toISOString().split('T')[0];
+                dateInput.setAttribute('min', today);
+            }
 
-                if (!name || !surname) { alert('Введите имя и фамилию'); return; }
-                if (phone.length !== 9) { alert('Введите корректный номер телефона (9 цифр)'); return; }
-                if (!doctorId) { alert('Выберите врача'); return; }
-                if (!date) { alert('Выберите дату'); return; }
-                if (!time) { alert('Выберите время'); return; }
-                if (isSlotBooked(doctorId, date, time)) {
-                    alert('Это время уже занято. Пожалуйста, выберите другое.');
-                    updateTimeOptions();
-                    return;
-                }
-                if (!bookSlot(doctorId, date, time)) {
-                    alert('Не удалось забронировать время, попробуйте ещё раз.');
-                    return;
-                }
+            // ====== ОТПРАВКА ФОРМЫ ======
+            const form = document.getElementById('orderForm');
+            if (form) {
+                form.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    console.log('Отправка формы...');
 
-                const fullPhone = '+996' + phone;
-                const doctorName = DOCTORS.find(d => d.id === doctorId)?.name || '';
-                const serviceName = SERVICES.find(s => s.id === service)?.name || '';
-                const data = { name, surname, phone: fullPhone, service: serviceName, doctor: doctorName, date, time, message };
+                    const name = document.getElementById('name')?.value.trim() || '';
+                    const surname = document.getElementById('surname')?.value.trim() || '';
+                    let phone = document.getElementById('phone')?.value.replace(/[^0-9]/g, '') || '';
+                    const service = document.getElementById('service')?.value || '';
+                    const doctorId = document.getElementById('doctorSelect')?.value || '';
+                    const date = document.getElementById('appointmentDate')?.value || '';
+                    const time = document.getElementById('appointmentTime')?.value || '';
+                    const message = document.getElementById('message')?.value || '';
 
-                document.getElementById('loading').classList.add('show');
-                try {
-                    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxzErCLZwHWgkS12aEsg_vuS-Gk93E2NAI1UUT0Vlg7x7QAThPcsaXM9i0h5J81RJUM/exec;
-                    await fetch(APPS_SCRIPT_URL, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(data)
-                    });
-                    document.getElementById('loading').classList.remove('show');
-                    document.getElementById('successModal').classList.add('show');
-                    document.getElementById('orderForm').reset();
-                    updateTimeOptions();
-                } catch (error) {
-                    console.error(error);
-                    document.getElementById('loading').classList.remove('show');
-                    document.getElementById('errorModal').classList.add('show');
-                }
-            });
+                    // Валидация
+                    if (!name || !surname) { alert('Введите имя и фамилию'); return; }
+                    if (phone.length !== 9) { alert('Введите корректный номер телефона (9 цифр)'); return; }
+                    if (!doctorId) { alert('Выберите врача'); return; }
+                    if (!date) { alert('Выберите дату'); return; }
+                    if (!time) { alert('Выберите время'); return; }
 
-            window.closeSuccessModal = () => document.getElementById('successModal').classList.remove('show');
-            window.closeErrorModal = () => document.getElementById('errorModal').classList.remove('show');
+                    if (isSlotBooked(doctorId, date, time)) {
+                        alert('Это время уже занято. Пожалуйста, выберите другое.');
+                        updateTimeOptions();
+                        return;
+                    }
+                    if (!bookSlot(doctorId, date, time)) {
+                        alert('Не удалось забронировать время, попробуйте ещё раз.');
+                        return;
+                    }
 
-            // Мобильное меню
+                    const fullPhone = '+996' + phone;
+                    const doctorName = DOCTORS.find(d => d.id === doctorId)?.name || '';
+                    const serviceName = SERVICES.find(s => s.id === service)?.name || '';
+
+                    const data = {
+                        name, surname,
+                        phone: fullPhone,
+                        service: serviceName,
+                        doctor: doctorName,
+                        date, time,
+                        message
+                    };
+
+                    // Показываем загрузку
+                    document.getElementById('loading').classList.add('show');
+
+                    try {
+                        // ⚠️ ЗАМЕНИТЕ URL НА СВОЙ APPS SCRIPT
+                        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzFNwW7JSlAlq4Lmk-PAtKdqLJapIKZTnQwcvMyKK00L03f9Vh6bIWKN9oXY_HSmPqqzw/exec';
+                        await fetch(APPS_SCRIPT_URL, {
+                            method: 'POST',
+                            mode: 'no-cors',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(data)
+                        });
+                        document.getElementById('loading').classList.remove('show');
+                        document.getElementById('successModal').classList.add('show');
+                        form.reset();
+                        updateTimeOptions();
+                    } catch (error) {
+                        console.error('Ошибка отправки:', error);
+                        document.getElementById('loading').classList.remove('show');
+                        document.getElementById('errorModal').classList.add('show');
+                    }
+                });
+            }
+
+            // ====== МОБИЛЬНОЕ МЕНЮ ======
             const hamburger = document.getElementById('hamburgerBtn');
             const mobileMenu = document.getElementById('mobileMenu');
             const overlay = document.getElementById('menuOverlay');
             const body = document.body;
-            function toggleMenu() {
-                hamburger.classList.toggle('active');
-                mobileMenu.classList.toggle('open');
-                overlay.classList.toggle('show');
-                body.classList.toggle('menu-open');
+            if (hamburger) {
+                hamburger.addEventListener('click', function() {
+                    hamburger.classList.toggle('active');
+                    mobileMenu.classList.toggle('open');
+                    overlay.classList.toggle('show');
+                    body.classList.toggle('menu-open');
+                });
             }
-            hamburger.addEventListener('click', toggleMenu);
-            overlay.addEventListener('click', toggleMenu);
+            if (overlay) {
+                overlay.addEventListener('click', function() {
+                    hamburger?.classList.remove('active');
+                    mobileMenu?.classList.remove('open');
+                    overlay.classList.remove('show');
+                    body.classList.remove('menu-open');
+                });
+            }
             document.querySelectorAll('#mobileMenu a').forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
                     const target = document.querySelector(this.getAttribute('href'));
                     if (target) {
-                        toggleMenu();
+                        hamburger?.classList.remove('active');
+                        mobileMenu?.classList.remove('open');
+                        overlay?.classList.remove('show');
+                        body.classList.remove('menu-open');
                         setTimeout(() => target.scrollIntoView({ behavior: 'smooth' }), 300);
                     }
                 });
             });
 
-            // Счетчики
+            // ====== СЧЁТЧИКИ ======
             function animateCounter(elId, start, end, duration) {
                 let startTime = null;
                 const el = document.getElementById(elId);
+                if (!el) return;
                 const step = (timestamp) => {
                     if (!startTime) startTime = timestamp;
                     const progress = Math.min((timestamp - startTime) / duration, 1);
@@ -877,9 +719,10 @@
                     }
                 });
             });
-            if (document.getElementById('counter1')) counterObserver.observe(document.getElementById('counter1'));
+            const c1 = document.getElementById('counter1');
+            if (c1) counterObserver.observe(c1);
 
-            // Плавный скролл для десктопных ссылок
+            // ====== ПЛАВНЫЙ СКРОЛЛ ДЛЯ ДЕСКТОПНЫХ ССЫЛОК ======
             document.querySelectorAll('header .hidden a, .btn-primary, .btn-outline').forEach(anchor => {
                 if (anchor.getAttribute('href') && anchor.getAttribute('href').startsWith('#')) {
                     anchor.addEventListener('click', function(e) {
@@ -889,6 +732,8 @@
                     });
                 }
             });
+
+            console.log('✅ Инициализация завершена');
         });
     </script>
 </body>
